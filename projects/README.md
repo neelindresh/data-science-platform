@@ -1,2 +1,1 @@
-# data-science-platform
-Repository for generic data science platform
+Folder for various data science projects
