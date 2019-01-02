@@ -1,9 +1,15 @@
 import sys
+import os
 
-def initialize():
-    sharedPath = '/home/jupuser/shared'
+def initializeSharedLib():
+    
+    cwd = os.getcwd()
+    projectDir = os.path.dirname(cwd)
+    platformDir = os.path.dirname(projectDir)
+    
+    sharedDir = platformDir+'/shared'
 
-    if sharedPath not in sys.path:
-        sys.path.append(sharedPath)
+    if sharedDir not in sys.path:
+        sys.path.append(sharedDir)
     
     pass
