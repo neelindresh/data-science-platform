@@ -1,9 +1,8 @@
 import sys
 import os
 
-def initializeSharedLib():
+def initializeSharedLib(cwd):    
     
-    cwd = os.getcwd()
     projectDir = os.path.dirname(cwd)
     platformDir = os.path.dirname(projectDir)
     
