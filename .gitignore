@@ -2,3 +2,5 @@
 *.parquet
 .ipynb_checkpoints/
 __pycache__/
+*.pem
+*.pkl
