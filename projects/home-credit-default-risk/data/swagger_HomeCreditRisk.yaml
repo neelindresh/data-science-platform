@@ -33,11 +33,11 @@ definitions:
       modelPath:
         type: string
         description: model path
-        example: "/home/indresh/Modell.pkl"
+        example: "/home/abhishek/data-science-platform/projects/home-credit-default-risk/data/Modell.pkl"
       dataPath:
         type: string
         description: data path
-        example: "/home/indresh/abhishek.parquet"
+        example: "/home/abhishek/data-science-platform/projects/home-credit-default-risk/data/abhishek.parquet"
     required:
       - modelPath
       - dataPath
