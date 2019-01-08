@@ -26,10 +26,10 @@ class Feature_Importance_Transformer():
     
     def sort_features(self,feature_importance,column_name):
         '''
-        Sort the feature importance values 
+        SORT THE FEATURE IMPORTANCE VALUES 
         args:
         1.feature_importance: <NPARRAY> containing the feature importance 
-        2. column names: <LIST> containing the column names from the dataframe
+        2.column_name: <LIST> containing the column names from the dataframe
         returns: sorted DICT of {key: column_name ,value :importance}
         '''
         feature_map={}
