@@ -24,7 +24,7 @@ class Feature_Importance_Transformer():
             X=X[:50000]
         return self.data,y,X
     
-    def sort_features(self,feature_importance,column_name):
+    def sort_features(self, feature_importance, column_name):
         '''
         SORT THE FEATURE IMPORTANCE VALUES 
         args:
@@ -51,6 +51,8 @@ class Feature_Importance_Transformer():
         1.data:<SPARK DATAFRAME> Actual Dataframe
         2.categorical_columns:<LIST> of categorical columns
         3.n_features:<INT> number of features we want to plot
+        4.learning_rate:<FLOAT> default value 0.1
+        5.n_estimators:<INT> number of estimators
         RETURNS : <DICT> of top N_features
         '''
         data,y,x=self.dataset(self.data,y)
