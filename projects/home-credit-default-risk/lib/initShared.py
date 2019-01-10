@@ -1,14 +1,8 @@
 import sys
-import os
 
-def initializeSharedLib(cwd):    
+def initializeSharedLib(sharedLibPath):    
     
-    projectDir = os.path.dirname(cwd)
-    platformDir = os.path.dirname(projectDir)
-    
-    sharedDir = platformDir+'/shared'
-
-    if sharedDir not in sys.path:
-        sys.path.append(sharedDir)
+    if sharedLibPath not in sys.path:
+        sys.path.append(sharedLibPath)
     
     pass
