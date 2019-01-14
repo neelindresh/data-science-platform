@@ -1,0 +1,49 @@
+swagger: "2.0"
+info:
+  title: "Home Loan Default prediction"
+  version: "1.1"
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /predictions:
+    post:
+      operationId: apilib.post_homeLoanDefault_predictions
+      summary: Predicts whether home loan borrower will default or not 
+      parameters:
+      - name: Path
+        in: body
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/Path'
+      responses:
+        200:
+          description: Returns predicted categories
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Prediction'              
+
+definitions:
+  Path:
+    description: Path object consisting of modelPath and dataPath
+    properties:
+      modelPath:
+        type: string
+        description: model path
+        example: "/home/ubuntu/applications/remoteDisk/platformData/home-credit-default-risk/models/log_reg.pkl"
+      dataPath:
+        type: string
+        description: data path
+        example: "/home/ubuntu/applications/remoteDisk/platformData/home-credit-default-risk/data/testData.parquet"
+    required:
+      - modelPath
+      - dataPath
+  Prediction:
+    type: array
+    example: "1, 0, 0, 0, 1..."
+    description: Predictions related to home loan default (1 - Yes, 0 - No)
+    readOnly: true
+          
