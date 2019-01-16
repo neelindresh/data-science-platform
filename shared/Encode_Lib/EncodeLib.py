@@ -1,20 +1,15 @@
-from pyspark.ml.param.shared import HasOutputCol
-from pyspark import keyword_only
-from pyspark.ml.feature import VectorAssembler,OneHotEncoder,StringIndexer
+from pyspark.ml.feature import VectorAssembler, OneHotEncoder, StringIndexer
+from pyspark.ml.util import DefaultParamsReadable, DefaultParamsWritable
+from pyspark.ml import Transformer
 
-from pyspark.ml.util import JavaMLReadable, JavaMLWritable
-from pyspark.ml.wrapper import JavaTransformer
-
-class LabelEncode(JavaTransformer, JavaMLReadable, JavaMLWritable, HasOutputCol):
+class LabelEncode(Transformer, DefaultParamsReadable, DefaultParamsWritable):
     
-    @keyword_only
-    def __init__(self, outputCol=None):
+    def __init__(self):
         super(LabelEncode, self).__init__()
-        self.setOutputCol(outputCol)
+        self.excludeCols = ['TARGET']        
     
     def _transform(self, df):
-        label_col=self.getOutputCol()
-        independent_df=df.select(*list(set(df.columns)-set(label_col)))
+        independent_df = df.select(*list(set(df.columns)-set(self.excludeCols)))
         cc=[cat[0] for cat in independent_df.dtypes if cat[1]=='string']
         for column in cc:
 #             print(column)
@@ -26,9 +21,9 @@ class LabelEncode(JavaTransformer, JavaMLReadable, JavaMLWritable, HasOutputCol)
         
         return df
     
-class OHEncode(JavaTransformer, JavaMLReadable, JavaMLWritable):
+
+class OHEncode(Transformer, DefaultParamsReadable, DefaultParamsWritable):
     
-    @keyword_only
     def __init__(self):
         super(OHEncode, self).__init__()
     
@@ -43,17 +38,16 @@ class OHEncode(JavaTransformer, JavaMLReadable, JavaMLWritable):
         print('One-Hot Encoding completed.')
         
         return df
-    
-class VectorChange(JavaTransformer, JavaMLReadable, JavaMLWritable, HasOutputCol):
-    
-    @keyword_only
-    def __init__(self, outputCol=None):
-        super(VectorChange, self).__init__()
-        self.setOutputCol(outputCol)
 
-    def _transform(self, df):
-        target_col=self.getOutputCol()       
-        assem=VectorAssembler(inputCols=list(set(df.columns)-set(target_col)),outputCol='features')
+    
+class VectorChange(Transformer, DefaultParamsReadable, DefaultParamsWritable):
+    
+    def __init__(self):
+        super(VectorChange, self).__init__()
+        self.excludeCols = ['TARGET']
+        
+    def _transform(self, df):       
+        assem=VectorAssembler(inputCols=list(set(df.columns)-set(self.excludeCols)),outputCol='features')
         df=assem.transform(df)
         
         print('Vector Encoding completed.')

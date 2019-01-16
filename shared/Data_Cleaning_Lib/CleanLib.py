@@ -1,9 +1,16 @@
 from pyspark.sql.functions import *
 from pyspark.ml.feature import Imputer
-from pyspark.ml.util import JavaMLReadable, JavaMLWritable
-from pyspark.ml.wrapper import JavaTransformer
+from pyspark.ml import Transformer
+from pyspark.ml.util import DefaultParamsReadable, DefaultParamsWritable
 
-class DataCleaningLib(JavaTransformer, JavaMLReadable, JavaMLWritable):    
+
+class DataCleaningLib(Transformer, DefaultParamsReadable, DefaultParamsWritable):    
+    
+    def __init__(self):
+        '''
+        Initialize instance of this class
+        '''
+        super(DataCleaningLib, self).__init__()
     
     def fill_na_numerical(self,data,columns):
         '''
@@ -17,8 +24,7 @@ class DataCleaningLib(JavaTransformer, JavaMLReadable, JavaMLWritable):
         columns=list(columns)
         imputer=Imputer(inputCols=columns,outputCols=['imputed_'+str(col) for col in columns])
         dataCopy=imputer.fit(data).transform(data)
-        return dataCopy
-    
+        return dataCopy    
     
     def get_max_value(self,count_dict):
         '''
